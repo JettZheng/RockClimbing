@@ -19,7 +19,8 @@ var (
 var (
 	bfPool = sync.Pool{
 		New: func() interface{} {
-			return bytes.NewBuffer([]byte{})
+			buf := make([]byte,0,100)
+			return bytes.NewBuffer(buf)
 		},
 	}
 )
@@ -99,7 +100,8 @@ func AddStringsByByteBufferNoPool(is ...string) string {
 	if len(is) == 1 {
 		return is[0]
 	}
-	buf := bytes.Buffer{}
+
+	buf := bytes.NewBuffer(make([]byte,0,100))
 	for _, i := range is {
 		buf.WriteString(i)
 	}
